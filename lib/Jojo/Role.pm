@@ -24,6 +24,12 @@ sub import {
   my $target = caller;
   my $me = shift;
   $_->import for qw(strict warnings);
+  @_ = $me->_become_role($target);
+  goto &Sub::Inject::sub_inject;
+}
+
+sub _become_role {
+  my ($me, $target) = @_;
   return if $me->is_role($target); # already exported into this package
   $INFO{$target}{is_role} = 1;
   # get symbol table reference
@@ -39,8 +45,7 @@ sub import {
   foreach my $hook (@ON_ROLE_CREATE) {
     $hook->($target);
   }
-  @_ = ($me->_generate_subs($target));
-  goto &Sub::Inject::sub_inject;
+  return $me->_generate_subs($target);
 }
 
 sub _generate_subs {
