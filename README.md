@@ -1,4 +1,4 @@
 
-# Jojo::Role [![Build Status](https://travis-ci.org/aferreira/cpan-Role-Jojo.svg?branch=master)](https://travis-ci.org/aferreira/cpan-Role-Jojo)
+# Jojo::Role [![Build Status](https://travis-ci.org/aferreira/cpan-Jojo-Role.svg?branch=master)](https://travis-ci.org/aferreira/cpan-Jojo-Role)
 
-Role::Tiny with lexical exports
+Role::Tiny with lexical "with"
