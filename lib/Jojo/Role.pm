@@ -1,6 +1,7 @@
 
 package Jojo::Role;
 
+use 5.018;
 use strict;
 use warnings;
 
