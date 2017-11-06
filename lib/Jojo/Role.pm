@@ -1,6 +1,7 @@
 
 package Jojo::Role;
 
+# ABSTRACT: Role::Tiny + lexical "with"
 use 5.018;
 use strict;
 use warnings;
