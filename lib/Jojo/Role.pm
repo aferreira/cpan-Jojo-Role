@@ -25,7 +25,15 @@ sub import {
   my $target = caller;
   my $me = shift;
   $_->import for qw(strict warnings);
-  @_ = $me->_become_role($target);
+
+  my $flag = shift;
+  if (!$flag) {
+    @_ = $me->_become_role($target);
+  }
+
+  elsif ($flag eq '-with') {
+     @_ = $me->_generate_subs($target, qw(with));
+  }
   goto &Sub::Inject::sub_inject;
 }
 
