@@ -39,14 +39,18 @@ sub import {
   $_->import for qw(strict warnings utf8);
   feature->import(':5.10');
 
+  my @exports = qw(before after around requires with);
+
   my $flag = shift;
   if (!$flag) {
-    @_ = $me->_become_role($target);
+    $me->_become_role($target);
   }
 
   elsif ($flag eq '-with') {
-     @_ = $me->_generate_subs($target, qw(with));
+     @exports = qw(with);
   }
+
+  @_ = $me->_generate_subs($target, @exports);
   goto &Sub::Inject::sub_inject;
 }
 
@@ -67,12 +71,12 @@ sub _become_role {
   foreach my $hook (@ON_ROLE_CREATE) {
     $hook->($target);
   }
-  return $me->_generate_subs($target);
+  return;
 }
 
 sub _generate_subs {
   my ($me, $target) = (shift, shift);
-  my %names = map {$_ => 1} @_ ? @_ : qw(before after around requires with);
+  my %names = map {$_ => 1} @_;
   my %subs;
   foreach my $type (qw(before after around)) {
     next unless $names{$type};
@@ -133,5 +137,11 @@ C<before>, C<after> and C<around> are imported
 as lexical subroutines.
 
 This is a companion to L<Mojo::Bass>.
+
+=head1 SEE ALSO
+
+L<Role::Tiny>
+
+L<Mojo::Bass>.
 
 =cut
