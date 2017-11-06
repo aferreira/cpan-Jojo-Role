@@ -5,7 +5,7 @@ use Test::More;
 use Jojo::Role ();
 
 my $last_role;
-push @Role::Tiny::ON_ROLE_CREATE, sub {
+push @Jojo::Role::ON_ROLE_CREATE, sub {
   ($last_role) = @_;
 };
 
