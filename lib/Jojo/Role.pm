@@ -16,9 +16,9 @@ use Sub::Inject 0.3.0 ();
 
 # Aliasing of Role::Tiny symbols
 BEGIN {
-  *INFO = \%Role::Tiny::INFO;
-  *APPLIED_TO = \%Role::Tiny::APPLIED_TO;
-  *COMPOSED = \%Role::Tiny::COMPOSED;
+  *INFO           = \%Role::Tiny::INFO;
+  *APPLIED_TO     = \%Role::Tiny::APPLIED_TO;
+  *COMPOSED       = \%Role::Tiny::COMPOSED;
   *COMPOSITE_INFO = \%Role::Tiny::COMPOSITE_INFO;
   *ON_ROLE_CREATE = \@Role::Tiny::ON_ROLE_CREATE;
 
@@ -33,7 +33,7 @@ our @ON_ROLE_CREATE;
 
 sub import {
   my $target = caller;
-  my $me = shift;
+  my $me     = shift;
 
   # Jojo modules are strict!
   $_->import for qw(strict warnings utf8);
@@ -47,7 +47,7 @@ sub import {
   }
 
   elsif ($flag eq '-with') {
-     @exports = qw(with);
+    @exports = qw(with);
   }
 
   @_ = $me->_generate_subs($target, @exports);
@@ -56,18 +56,23 @@ sub import {
 
 sub _become_role {
   my ($me, $target) = @_;
-  return if $me->is_role($target); # already exported into this package
+  return if $me->is_role($target);    # already exported into this package
   $INFO{$target}{is_role} = 1;
+
   # get symbol table reference
   my $stash = _getstash($target);
+
   # grab all *non-constant* (stash slot is not a scalarref) subs present
   # in the symbol table and store their refaddrs (no need to forcibly
   # inflate constant subs into real subs) with a map to the coderefs in
   # case of copying or re-use
-  my @not_methods = map +(ref $_ eq 'CODE' ? $_ : ref $_ ? () : *$_{CODE}||()), values %$stash;
-  @{$INFO{$target}{not_methods}={}}{@not_methods} = @not_methods;
+  my @not_methods
+    = map +(ref $_ eq 'CODE' ? $_ : ref $_ ? () : *$_{CODE} || ()),
+    values %$stash;
+  @{$INFO{$target}{not_methods} = {}}{@not_methods} = @not_methods;
+
   # a role does itself
-  $APPLIED_TO{$target} = { $target => undef };
+  $APPLIED_TO{$target} = {$target => undef};
   foreach my $hook (@ON_ROLE_CREATE) {
     $hook->($target);
   }
@@ -76,23 +81,25 @@ sub _become_role {
 
 sub _generate_subs {
   my ($me, $target) = (shift, shift);
-  my %names = map {$_ => 1} @_;
+  my %names = map { $_ => 1 } @_;
   my %subs;
   foreach my $type (qw(before after around)) {
     next unless $names{$type};
     $subs{$type} = sub {
-      push @{$INFO{$target}{modifiers}||=[]}, [ $type => @_ ];
+      push @{$INFO{$target}{modifiers} ||= []}, [$type => @_];
       return;
     };
   }
   $subs{'requires'} = sub {
-    push @{$INFO{$target}{requires}||=[]}, @_;
+    push @{$INFO{$target}{requires} ||= []}, @_;
     return;
-  } if $names{'requires'};
+    }
+    if $names{'requires'};
   $subs{'with'} = sub {
     $me->apply_roles_to_package($target, @_);
     return;
-  } if $names{'with'};
+    }
+    if $names{'with'};
   return \%subs;
 }
 
