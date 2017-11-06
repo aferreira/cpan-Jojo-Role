@@ -13,13 +13,22 @@ BEGIN {
 
 use Sub::Inject 0.3.0 ();
 
-package    # Just for the lexicals
-  Role::Tiny;
+# Aliasing of Role::Tiny symbols
+BEGIN {
+  *INFO = \%Role::Tiny::INFO;
+  *APPLIED_TO = \%Role::Tiny::APPLIED_TO;
+  *COMPOSED = \%Role::Tiny::COMPOSED;
+  *COMPOSITE_INFO = \%Role::Tiny::COMPOSITE_INFO;
+  *ON_ROLE_CREATE = \@Role::Tiny::ON_ROLE_CREATE;
+
+  *_getstash = \&Role::Tiny::_getstash;
+}
+
 our %INFO;
 our %APPLIED_TO;
+our %COMPOSED;
+our %COMPOSITE_INFO;
 our @ON_ROLE_CREATE;
-
-package Jojo::Role;
 
 sub import {
   my $target = caller;
@@ -42,7 +51,7 @@ sub _become_role {
   return if $me->is_role($target); # already exported into this package
   $INFO{$target}{is_role} = 1;
   # get symbol table reference
-  my $stash = Role::Tiny::_getstash($target);
+  my $stash = _getstash($target);
   # grab all *non-constant* (stash slot is not a scalarref) subs present
   # in the symbol table and store their refaddrs (no need to forcibly
   # inflate constant subs into real subs) with a map to the coderefs in
