@@ -90,3 +90,45 @@ sub _generate_subs {
 }
 
 1;
+
+=encoding utf8
+
+=head1 SYNOPSIS
+
+ package Some::Role;
+
+ use Jojo::Role;
+
+ sub foo { ... }
+
+ sub bar { ... }
+
+ around baz => sub { ... };
+
+ 1;
+
+elsewhere
+
+ package Some::Class;
+
+ use Jojo::Role -with;
+
+ # bar gets imported, but not foo
+ with 'Some::Role';
+
+ sub foo { ... }
+
+ # baz is wrapped in the around modifier by Class::Method::Modifiers
+ sub baz { ... }
+
+ 1;
+
+=head1 DESCRIPTION
+
+L<Jojo::Role> works like L<Role::Tiny> but C<with>, C<require>,
+C<before>, C<after> and C<around> are imported
+as lexical subroutines.
+
+This is a companion to L<Mojo::Bass>.
+
+=cut
