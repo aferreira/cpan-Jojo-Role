@@ -34,7 +34,10 @@ our @ON_ROLE_CREATE;
 sub import {
   my $target = caller;
   my $me = shift;
-  $_->import for qw(strict warnings);
+
+  # Jojo modules are strict!
+  $_->import for qw(strict warnings utf8);
+  feature->import(':5.10');
 
   my $flag = shift;
   if (!$flag) {
