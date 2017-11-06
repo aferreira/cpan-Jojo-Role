@@ -49,9 +49,11 @@ sub _become_role {
 }
 
 sub _generate_subs {
-  my ($me, $target) = @_;
+  my ($me, $target) = (shift, shift);
+  my %names = map {$_ => 1} @_ ? @_ : qw(before after around requires with);
   my %subs;
   foreach my $type (qw(before after around)) {
+    next unless $names{$type};
     $subs{$type} = sub {
       push @{$INFO{$target}{modifiers}||=[]}, [ $type => @_ ];
       return;
@@ -60,11 +62,11 @@ sub _generate_subs {
   $subs{'requires'} = sub {
     push @{$INFO{$target}{requires}||=[]}, @_;
     return;
-  };
+  } if $names{'requires'};
   $subs{'with'} = sub {
     $me->apply_roles_to_package($target, @_);
     return;
-  };
+  } if $names{'with'};
   return \%subs;
 }
 
