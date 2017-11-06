@@ -11,7 +11,7 @@ BEGIN {
   our @ISA = qw(Role::Tiny);
 }
 
-use Sub::Inject 0.2.0 ();
+use Sub::Inject 0.3.0 ();
 
 package    # Just for the lexicals
   Role::Tiny;
