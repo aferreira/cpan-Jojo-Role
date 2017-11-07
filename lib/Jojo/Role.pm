@@ -37,6 +37,20 @@ our @ON_ROLE_CREATE;
 our %EXPORT_TAGS;
 our %EXPORT_GEN;
 
+# Jojo::Role->apply_roles_to_package('Some::Package', qw(Some::Role +Other::Role));
+sub apply_roles_to_package {
+  my ($self, $target) = (shift, shift);
+  return $self->Role::Tiny::apply_roles_to_package($target,
+    map { /^\+(.+)$/ ? "${target}::Role::$1" : $_ } @_);
+}
+
+# Jojo::Role->create_class_with_roles('Some::Base', qw(Some::Role1 +Role2));
+sub create_class_with_roles {
+  my ($self, $target) = (shift, shift);
+  return $self->Role::Tiny::create_class_with_roles($target,
+    map { /^\+(.+)$/ ? "${target}::Role::$1" : $_ } @_);
+}
+
 sub import {
   my $target = caller;
   my $me     = shift;
