@@ -151,12 +151,27 @@ L<Jojo::Role> works like L<Role::Tiny> but C<with>, C<require>,
 C<before>, C<after> and C<around> are imported
 as lexical subroutines.
 
-This is a companion to L<Mojo::Bass>.
+This is a companion to L<Jojo::Base>.
+
+=head1 CAVEATS
+
+=over 4
+
+=item *
+
+L<Jojo::Role> requires perl 5.18 or newer
+
+=item *
+
+Because a lexical sub does not behave like a package import,
+some code may need to be enclosed in blocks to avoid warnings like
+
+    "state" subroutine &has masks earlier declaration in same scope at...
+
+=back
 
 =head1 SEE ALSO
 
-L<Role::Tiny>
-
-L<Mojo::Bass>.
+L<Role::Tiny>, L<Mojo::Bass>.
 
 =cut
