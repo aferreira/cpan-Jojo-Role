@@ -12,6 +12,7 @@ BEGIN {
   our @ISA = qw(Role::Tiny);
 }
 
+use experimental ();
 use Sub::Inject 0.3.0 ();
 
 # Aliasing of Role::Tiny symbols
@@ -41,6 +42,7 @@ sub import {
   # Jojo modules are strict!
   $_->import for qw(strict warnings utf8);
   feature->import(':5.18');
+  experimental->import('lexical_subs');
 
   my $flag = shift;
   if (!$flag) {
