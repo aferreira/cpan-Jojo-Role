@@ -40,7 +40,7 @@ sub import {
 
   # Jojo modules are strict!
   $_->import for qw(strict warnings utf8);
-  feature->import(':5.10');
+  feature->import(':5.18');
 
   my $flag = shift;
   if (!$flag) {
