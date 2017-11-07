@@ -3,6 +3,8 @@ Release history for Jojo-Role
 
 {{$NEXT}}
 
+    - Depend on "experimental" (core after v5.19.1)
+
 v0.3     2017-11-07 15:36:05-08:00 America/Los_Angeles
 
     - Add support to shorthands: '+Foo' becomes '${base}::Role::Foo'
