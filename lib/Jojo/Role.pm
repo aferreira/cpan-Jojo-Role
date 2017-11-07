@@ -109,33 +109,24 @@ sub _generate_subs {
 
 =head1 SYNOPSIS
 
- package Some::Role;
+  package Some::Role {
+    use Jojo::Role;
 
- use Jojo::Role;
+    sub foo {...}
+    sub bar {...}
+    around baz => sub {...};
+  }
 
- sub foo { ... }
+  package Some::Class {
+    use Jojo::Role -with;
+    with 'Some::Role';
 
- sub bar { ... }
+    # bar gets imported, but not foo
+    sub foo {...}
 
- around baz => sub { ... };
-
- 1;
-
-elsewhere
-
- package Some::Class;
-
- use Jojo::Role -with;
-
- # bar gets imported, but not foo
- with 'Some::Role';
-
- sub foo { ... }
-
- # baz is wrapped in the around modifier by Class::Method::Modifiers
- sub baz { ... }
-
- 1;
+    # baz is wrapped in the around modifier by Class::Method::Modifiers
+    sub baz {...}
+  }
 
 =head1 DESCRIPTION
 
