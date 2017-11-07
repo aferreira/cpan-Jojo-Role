@@ -8,7 +8,7 @@ use warnings;
 
 BEGIN {
   require Role::Tiny;
-  Role::Tiny->VERSION('2.000001');
+  Role::Tiny->VERSION('2.000005');
   our @ISA = qw(Role::Tiny);
 }
 
