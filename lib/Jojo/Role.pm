@@ -5,6 +5,9 @@ package Jojo::Role;
 use 5.018;
 use strict;
 use warnings;
+use utf8;
+use feature      ();
+use experimental ();
 
 BEGIN {
   require Role::Tiny;
@@ -12,7 +15,6 @@ BEGIN {
   our @ISA = qw(Role::Tiny);
 }
 
-use experimental ();
 use Sub::Inject 0.3.0 ();
 
 # Aliasing of Role::Tiny symbols
