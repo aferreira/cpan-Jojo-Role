@@ -125,7 +125,7 @@ sub _generate_subs {
 =head1 SYNOPSIS
 
   package Some::Role {
-    use Jojo::Role;
+    use Jojo::Role;    # requires perl 5.18+
 
     sub foo {...}
     sub bar {...}
