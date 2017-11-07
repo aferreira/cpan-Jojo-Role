@@ -31,6 +31,9 @@ our %COMPOSED;
 our %COMPOSITE_INFO;
 our @ON_ROLE_CREATE;
 
+our %EXPORT_TAGS;
+our %EXPORT_GEN;
+
 sub import {
   my $target = caller;
   my $me     = shift;
@@ -39,17 +42,13 @@ sub import {
   $_->import for qw(strict warnings utf8);
   feature->import(':5.10');
 
-  my @exports = qw(before after around requires with);
-
   my $flag = shift;
   if (!$flag) {
     $me->_become_role($target);
+    $flag = '-role';
   }
 
-  elsif ($flag eq '-with') {
-    @exports = qw(with);
-  }
-
+  my @exports = @{$EXPORT_TAGS{$flag} // []};
   @_ = $me->_generate_subs($target, @exports);
   goto &Sub::Inject::sub_inject;
 }
@@ -79,28 +78,44 @@ sub _become_role {
   return;
 }
 
-sub _generate_subs {
-  my ($me, $target) = (shift, shift);
-  my %names = map { $_ => 1 } @_;
-  my %subs;
+BEGIN {
+  %EXPORT_TAGS = (    #
+    -role => [qw(after around before requires with)],
+    -with => [qw(with)],
+  );
+
+  %EXPORT_GEN = (
+    requires => sub {
+      my (undef, $target) = @_;
+      return sub {
+        push @{$INFO{$target}{requires} ||= []}, @_;
+        return;
+      };
+    },
+    with => sub {
+      my ($me, $target) = @_;
+      return sub {
+        $me->apply_roles_to_package($target, @_);
+        return;
+      };
+    },
+  );
+
+  # before/after/around
   foreach my $type (qw(before after around)) {
-    next unless $names{$type};
-    $subs{$type} = sub {
-      push @{$INFO{$target}{modifiers} ||= []}, [$type => @_];
-      return;
+    $EXPORT_GEN{$type} = sub {
+      my (undef, $target) = @_;
+      return sub {
+        push @{$INFO{$target}{modifiers} ||= []}, [$type => @_];
+        return;
+      };
     };
   }
-  $subs{'requires'} = sub {
-    push @{$INFO{$target}{requires} ||= []}, @_;
-    return;
-    }
-    if $names{'requires'};
-  $subs{'with'} = sub {
-    $me->apply_roles_to_package($target, @_);
-    return;
-    }
-    if $names{'with'};
-  return \%subs;
+}
+
+sub _generate_subs {
+  my ($class, $target) = (shift, shift);
+  return map { my $cb = $EXPORT_GEN{$_}; $_ => $class->$cb($target) } @_;
 }
 
 1;

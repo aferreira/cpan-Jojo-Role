@@ -3,6 +3,8 @@ Release history for Jojo-Role
 
 {{$NEXT}}
 
+    - Rewrite exporting code with %EXPORT_TAGS and %EXPORT_GEN
+
 v0.1     2017-11-07 09:06:52-08:00 America/Los_Angeles (TRIAL RELEASE)
 
     - Initial version
