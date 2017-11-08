@@ -71,6 +71,8 @@ sub import {
   goto &Sub::Inject::sub_inject;
 }
 
+sub role_provider { $_[0] }
+
 sub _become_role {
   my ($me, $target) = @_;
   return if $me->is_role($target);    # already exported into this package
@@ -113,7 +115,7 @@ BEGIN {
     with => sub {
       my ($me, $target) = @_;
       return sub {
-        $me->apply_roles_to_package($target, @_);
+        $me->role_provider->apply_roles_to_package($target, @_);
         return;
       };
     },
