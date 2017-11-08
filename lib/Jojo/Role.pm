@@ -192,4 +192,9 @@ some code may need to be enclosed in blocks to avoid warnings like
 
 L<Role::Tiny>, L<Jojo::Base>.
 
+=head1 ACKNOWLEDGMENTS
+
+Thanks to the authors of L<Role::Tiny>,
+which hold the copyright over the original code.
+
 =cut
