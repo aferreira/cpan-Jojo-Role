@@ -113,9 +113,9 @@ BEGIN {
       };
     },
     with => sub {
-      my ($me, $target) = @_;
+      my ($me, $target) = (shift->role_provider, shift);
       return sub {
-        $me->role_provider->apply_roles_to_package($target, @_);
+        $me->apply_roles_to_package($target, @_);
         return;
       };
     },
