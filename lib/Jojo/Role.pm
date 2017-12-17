@@ -165,7 +165,7 @@ sub _generate_subs {
 
 =head1 DESCRIPTION
 
-L<Jojo::Role> works kind of like L<Role::Tiny> but C<with>, C<require>,
+L<Jojo::Role> works kind of like L<Role::Tiny> but C<with>, C<requires>,
 C<before>, C<after> and C<around> are imported
 as lexical subroutines.
 
