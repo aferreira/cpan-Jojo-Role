@@ -182,7 +182,7 @@ Second, to compose one or more roles into a class, via
 
     use Jojo::Base -with;
 
-=head1 IMPORTED SUBROUTINES: TAG C<-role>
+=head1 IMPORTED -role SUBROUTINES
 
 The C<-role> tag exports the following subroutines into the caller.
 
@@ -224,7 +224,7 @@ Declares a list of methods that must be defined to compose the role.
 
 Composes one or more roles into the current role.
 
-=head1 IMPORTED SUBROUTINES: TAG C<-with>
+=head1 IMPORTED -with SUBROUTINES
 
 The C<-with> tag exports the following subroutine into the caller.
 It is equivalent to using L<Role::Tiny::With>.
