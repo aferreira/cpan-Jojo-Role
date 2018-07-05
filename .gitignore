@@ -11,9 +11,9 @@
 # etc-quack generate copies
 *.orig
 
-# dev lib
-/inc/
+# local lib
+/local/
 
-## dzil build files
-#/Jojo-Role-*.tar.gz
-#/Jojo-Role-*/
+# dzil build files
+/Jojo-Role-*.tar.gz
+/Jojo-Role-*/
