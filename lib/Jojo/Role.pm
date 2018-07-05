@@ -191,7 +191,7 @@ The C<-role> tag exports the following subroutines into the caller.
   after foo => sub { ... };
 
 Declares an
-L<< "after" | Class::Method::Modifiers/after method(s) => sub { ... } >>
+L<< "after" |Class::Method::Modifiers/after method(s) => sub { ... } >>
 modifier to be applied to the named method at composition time.
 
 =head2 around
@@ -199,7 +199,7 @@ modifier to be applied to the named method at composition time.
   around => sub { ... };
 
 Declares an
-L<< "around" | Class::Method::Modifiers/around method(s) => sub { ... } >>
+L<< "around" |Class::Method::Modifiers/around method(s) => sub { ... } >>
 modifier to be applied to the named method at composition time.
 
 =head2 before
@@ -207,7 +207,7 @@ modifier to be applied to the named method at composition time.
   before => sub { ... };
 
 Declares a
-L<< "before" | Class::Method::Modifiers/before method(s) => sub { ... } >>
+L<< "before" |Class::Method::Modifiers/before method(s) => sub { ... } >>
 modifier to be applied to the named method at composition time.
 
 =head2 requires
