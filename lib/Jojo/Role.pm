@@ -11,7 +11,7 @@ use experimental ();
 
 BEGIN {
   require Role::Tiny;
-  Role::Tiny->VERSION('2.000005');
+  Role::Tiny->VERSION('2.000006');
   our @ISA = qw(Role::Tiny);
 }
 
