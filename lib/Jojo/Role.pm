@@ -37,6 +37,7 @@ our @ON_ROLE_CREATE;
 our %EXPORT_TAGS;
 our %EXPORT_GEN;
 
+
 # Jojo::Role->apply_roles_to_package('Some::Package', qw(Some::Role +Other::Role));
 sub apply_roles_to_package {
   my ($self, $target) = (shift, shift);
@@ -171,7 +172,87 @@ as lexical subroutines.
 
 This is a companion to L<Jojo::Base>.
 
+L<Jojo::Role> may be used in two ways. First, to declare a role, which is done
+with
+
+    use Jojo::Base;
+    use Jojo::Base -role;    # Longer version
+
+Second, to compose one or more roles into a class, via
+
+    use Jojo::Base -with;
+
+=head1 IMPORTED SUBROUTINES: TAG C<-role>
+
+The C<-role> tag exports the following subroutines into the caller.
+
+=head2 after
+
+  after foo => sub { ... };
+
+Declares an
+L<< "after" | Class::Method::Modifiers/after method(s) => sub { ... } >>
+modifier to be applied to the named method at composition time.
+
+=head2 around
+
+  around => sub { ... };
+
+Declares an
+L<< "around" | Class::Method::Modifiers/around method(s) => sub { ... } >>
+modifier to be applied to the named method at composition time.
+
+=head2 before
+
+  before => sub { ... };
+
+Declares a
+L<< "before" | Class::Method::Modifiers/before method(s) => sub { ... } >>
+modifier to be applied to the named method at composition time.
+
+=head2 requires
+
+  requires qw(foo bar);
+
+Declares a list of methods that must be defined to compose the role.
+
+=head2 with
+
+  with 'Some::Role';
+
+  with 'Some::Role1', 'Some::Role2';
+
+Composes one or more roles into the current role.
+
+=head1 IMPORTED SUBROUTINES: TAG C<-with>
+
+The C<-with> tag exports the following subroutine into the caller.
+It is equivalent to using L<Role::Tiny::With>.
+
+=head2 with
+
+  with 'Some::Role1', 'Some::Role2';
+
+Composes one or more roles into the current class.
+
 =head1 METHODS
+
+L<Jojo::Role> inherits all methods from L<Role::Tiny> and implements the
+following new ones.
+
+=head2 apply_roles_to_package
+
+  Jojo::Role->apply_roles_to_package('Some::Package', qw(Some::Role +Other::Role));
+
+=head2 create_class_with_roles
+
+  Jojo::Role->create_class_with_roles('Some::Base', qw(Some::Role1 +Role2));
+
+=head2 import
+
+  Jojo::Role->import();
+  Jojo::Role->import(-role);
+  Jojo::Role->import(-with);
 
 =head2 make_role
 
@@ -203,7 +284,7 @@ L<Role::Tiny>, L<Jojo::Base>.
 
 =head1 ACKNOWLEDGMENTS
 
-Thanks to the authors of L<Role::Tiny>,
-which hold the copyright over the original code.
+Thanks to the authors of L<Role::Tiny>, which hold
+the copyright over the original code.
 
 =cut
