@@ -166,7 +166,7 @@ sub _generate_subs {
 =head1 DESCRIPTION
 
 L<Jojo::Role> works kind of like L<Role::Tiny> but C<with>, C<requires>,
-C<before>, C<after> and C<around> are imported
+C<before>, C<after> and C<around> are exported
 as lexical subroutines.
 
 This is a companion to L<Jojo::Base>.
@@ -193,7 +193,7 @@ L<Jojo::Role> requires perl 5.18 or newer
 Because a lexical sub does not behave like a package import,
 some code may need to be enclosed in blocks to avoid warnings like
 
-    "state" subroutine &has masks earlier declaration in same scope at...
+    "state" subroutine &with masks earlier declaration in same scope at...
 
 =back
 
