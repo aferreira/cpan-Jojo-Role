@@ -62,7 +62,7 @@ sub import {
 
   my $flag = shift;
   if (!$flag) {
-    $me->_become_role($target);
+    $me->make_role($target);
     $flag = '-role';
   }
 
@@ -73,7 +73,7 @@ sub import {
 
 sub role_provider { $_[0] }
 
-sub _become_role {
+sub make_role {
   my ($me, $target) = @_;
   return if $me->is_role($target);    # already exported into this package
   $INFO{$target}{is_role} = 1;
@@ -170,6 +170,15 @@ C<before>, C<after> and C<around> are imported
 as lexical subroutines.
 
 This is a companion to L<Jojo::Base>.
+
+=head1 METHODS
+
+=head2 make_role
+
+  Role::Tiny->make_role('Some::Package');
+
+Promotes a given package to a role.
+No subroutines are imported into C<'Some::Package'>.
 
 =head1 CAVEATS
 
