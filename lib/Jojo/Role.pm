@@ -23,6 +23,8 @@ use constant COMPAT_MODE => !LEXICAL_SUBS && ($ENV{JOJO_ROLE_COMPAT} || 0);
 BEGIN {
   *EXPORT_TO = do { require Importer::Zim; Importer::Zim->can('export_to') }
     if COMPAT_MODE;
+  do { require Sub::Inject; Sub::Inject->VERSION('0.3.0') }
+    if !COMPAT_MODE && !LEXICAL_SUBS;
 }
 
 # Aliasing of Role::Tiny symbols
