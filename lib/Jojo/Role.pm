@@ -256,7 +256,7 @@ following new ones.
 
 =head2 make_role
 
-  Role::Tiny->make_role('Some::Package');
+  Jojo::Role->make_role('Some::Package');
 
 Promotes a given package to a role.
 No subroutines are imported into C<'Some::Package'>.
