@@ -21,7 +21,8 @@ use Sub::Inject 0.3.0 ();
 
 # Aliasing of Jojo::Role::Tiny symbols
 BEGIN {
-  *INFO = \%Jojo::Role::Tiny::INFO;
+  *INFO           = \%Jojo::Role::Tiny::INFO;
+  *ON_ROLE_CREATE = \@Jojo::Role::Tiny::ON_ROLE_CREATE;
 }
 
 our %INFO;
