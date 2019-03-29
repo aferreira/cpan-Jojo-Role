@@ -9,6 +9,15 @@ use warnings;
 our $VERSION = '2.000006';
 $VERSION =~ tr/_//d;
 
+# Aliasing of Role::Tiny symbols
+BEGIN {
+  *INFO           = \%Role::Tiny::INFO;
+  *APPLIED_TO     = \%Role::Tiny::APPLIED_TO;
+  *COMPOSED       = \%Role::Tiny::COMPOSED;
+  *COMPOSITE_INFO = \%Role::Tiny::COMPOSITE_INFO;
+  *ON_ROLE_CREATE = \@Role::Tiny::ON_ROLE_CREATE;
+}
+
 our %INFO;
 our %APPLIED_TO;
 our %COMPOSED;
