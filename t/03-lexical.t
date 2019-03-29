@@ -2,10 +2,13 @@
 use Test::More;
 use experimental qw(lexical_subs);
 
+use Role::Tiny;
+
 my sub ok { goto &Test::More::ok }
 
 my sub stash_subs {
-  my $stash = Jojo::Role::_getstash(shift);
+  my $stash
+    = Role::Tiny::_getstash(shift); # XXX using internal knowledge of Role::Tiny
   return grep { ref $_ eq 'CODE' || !ref $_ && *$_{CODE} } values %$stash;
 }
 
