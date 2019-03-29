@@ -4,6 +4,10 @@ Release history for Jojo-Role
 {{$NEXT}}
 
 
+v0.6      2019-03-29 19:54:20+00:00 UTC
+
+   - Use a fork of Role::Tiny
+
 v0.5      2018-07-05 16:26:46-07:00 America/Los_Angeles
 
    - Jojo::Role->make_role($package)
