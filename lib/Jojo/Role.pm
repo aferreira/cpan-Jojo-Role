@@ -9,6 +9,8 @@ use utf8;
 use feature      ();
 use experimental ();
 
+our $VERSION = '0.5.0';
+
 BEGIN {
   require Jojo::Role::Tiny;
   Jojo::Role::Tiny->VERSION('2.000006');
