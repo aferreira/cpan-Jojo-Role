@@ -17,7 +17,17 @@ BEGIN {
   our @ISA = qw(Jojo::Role::Tiny);
 }
 
-use Sub::Inject 0.3.0 ();
+use constant LEXICAL_SUBS => !!
+  eval { require Sub::Inject; Sub::Inject->VERSION('0.3.0'); 1 };
+
+use constant COMPAT_MODE => !LEXICAL_SUBS && ($ENV{JOJO_ROLE_COMPAT} || 0);
+
+BEGIN {
+  *EXPORT_TO = do { require Importer::Zim; Importer::Zim->can('export_to') }
+    if COMPAT_MODE;
+  do { require Sub::Inject; Sub::Inject->VERSION('0.3.0') }
+    if !COMPAT_MODE && !LEXICAL_SUBS;
+}
 
 # Aliasing of Jojo::Role::Tiny symbols
 BEGIN {
@@ -61,6 +71,7 @@ sub import {
 
   my @exports = @{$EXPORT_TAGS{$flag} // []};
   @_ = $me->_generate_subs($target, @exports);
+  unshift(@_, $target), goto &EXPORT_TO if COMPAT_MODE;
   goto &Sub::Inject::sub_inject;
 }
 
